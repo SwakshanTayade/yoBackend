@@ -5,7 +5,9 @@ export const create = async(req,res)=>{
     try {
         
         const newUser = await user(req.body);
-
+        const email = newUser.email;
+        const isPresent = await user.findOne({email});
+        if(isPresent) return res.status(200).json({msg:"User Alread present"});
         if(!newUser) {
             return res.status(404).json({
                 msg:"not able"
@@ -14,6 +16,7 @@ export const create = async(req,res)=>{
 
         const savedUser = await newUser.save();
         res.status(200).json({
+            msg:"User Created SuccessFully",
             savedUser
         })
 
@@ -68,6 +71,7 @@ export const updateOne = async(req,res)=>{
 
         const updatedUser = await user.findByIdAndUpdate(id,req.body,{new:true});
         res.status(200).json({
+            msg:"Updated User Successfully",
             updatedUser
         })
     } catch (error) {
