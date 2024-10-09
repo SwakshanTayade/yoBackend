@@ -8,7 +8,6 @@ import Update from './components/Update'
 import Delete from './components/Delete'
 import Add from './components/Add'
 function App() {
-
   return (
     <Router>
       <ColorModeSwitcher/>

@@ -7,6 +7,7 @@ const Update = () => {
 
     const {id} = useParams();
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_PROD_BASE_URL:import.meta.env.VITE_DEV_BASE_URL;
     const newUser = {
         fname:"",
         lname:"",
@@ -23,7 +24,7 @@ const Update = () => {
 
     useEffect(()=>{
         const findUser = async()=>{
-            const res = await axios.get(`http://localhost:8000/api/getOne/${id}`);
+            const res = await axios.get(`${baseUrl}/api/getOne/${id}`);
             setNewUsr(res.data.userOne);
         }
         findUser();
@@ -32,7 +33,7 @@ const Update = () => {
     const updateUser = async(e)=>{
         e.preventDefault();
         try {
-            const res = await axios.put(`http://localhost:8000/api/update/${id}`, newUsr);
+            const res = await axios.put(`${baseUrl}/api/update/${id}`, newUsr);
             console.log(res);
             toast.success(res.data.msg,{position:'top-right',autoClose:3000});
             navigate("/");

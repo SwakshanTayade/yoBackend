@@ -21,9 +21,10 @@ import { toast } from 'react-toastify';
 const Home = () => {
     const [allUsers, setAllUsers] = useState([]);
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_PROD_BASE_URL:import.meta.env.VITE_DEV_BASE_URL;
     useEffect(() => {
         const fetchUsers = async () => {
-            const res = await axios.get("http://localhost:8000/api/getAll");
+            const res = await axios.get(`${baseUrl}/api/getAll`);
             setAllUsers(res.data.allUsers);
         }
         fetchUsers();
@@ -31,7 +32,7 @@ const Home = () => {
 
     const deleteUser = async(userId)=>{
         try {
-            await axios.delete(`http://localhost:8000/api/delete/${userId}`);
+            await axios.delete(`${baseUrl}/api/delete/${userId}`);
             toast.success("User deleted SuccessFully",{position:'top-right',autoClose:3000});
             setAllUsers((prevUser)=>prevUser.filter((user)=> user._id !== userId));
             navigate("/");

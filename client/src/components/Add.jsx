@@ -15,6 +15,7 @@ const Add = () => {
 
     const [user,setUser] = useState(userEntries);
     const navigate = useNavigate();
+    const baseUrl = import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_PROD_BASE_URL:import.meta.env.VITE_DEV_BASE_URL;
     const inputHandle = (e)=>{
         const {name,value} = e.target;
         setUser({...user,[name]:value});
@@ -22,7 +23,7 @@ const Add = () => {
     const Create = async(e)=>{
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:8000/api/create",user)
+            const res = await axios.post(`${baseUrl}/api/create`,user)
             toast.success(res.data.msg,{
                 position:'top-right',
                 autoClose:3000})
