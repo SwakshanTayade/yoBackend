@@ -18,13 +18,16 @@ import { MdDelete } from 'react-icons/md'
 import { HiPencilAlt } from "react-icons/hi";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Loader from './Loader/Loader';
 const Home = () => {
     const [allUsers, setAllUsers] = useState([]);
+    const [loader,setLoader] = useState(true);
     const navigate = useNavigate();
     const baseUrl = import.meta.env.VITE_NODE_ENV === 'production' ? import.meta.env.VITE_PROD_BASE_URL:import.meta.env.VITE_DEV_BASE_URL;
     useEffect(() => {
         const fetchUsers = async () => {
             const res = await axios.get(`${baseUrl}/api/getAll`);
+            setLoader(false);
             setAllUsers(res.data.allUsers);
         }
         fetchUsers();
@@ -32,7 +35,9 @@ const Home = () => {
 
     const deleteUser = async(userId)=>{
         try {
+            setLoader(true);
             await axios.delete(`${baseUrl}/api/delete/${userId}`);
+            setLoader(false);
             toast.success("User deleted SuccessFully",{position:'top-right',autoClose:3000});
             setAllUsers((prevUser)=>prevUser.filter((user)=> user._id !== userId));
             navigate("/");
@@ -47,7 +52,8 @@ const Home = () => {
             <Button colorScheme={"twitter"}>
                 <Link to={"/create"} >Create A User</Link>
             </Button>
-            <Box boxShadow={"1px 1px 20px gray"} w={"max-content"}>
+            {
+                loader?<Loader/>:<Box boxShadow={"1px 1px 20px gray"} w={"max-content"}>
                 <TableContainer>
                     <Table variant='simple'>
                         <TableCaption>All users</TableCaption>
@@ -82,6 +88,8 @@ const Home = () => {
                     </Table>
                 </TableContainer>
             </Box>
+            }
+            
 
         </VStack>
     )
