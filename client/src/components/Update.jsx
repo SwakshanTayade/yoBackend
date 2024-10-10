@@ -50,7 +50,13 @@ const Update = () => {
         <Button pos={"absolute"} left={"20px"} top={"20px"} colorScheme={"twitter"}>
             <Link to={"/"}>Show All Users</Link>
         </Button>
-        <Box w={"50%"} borderRadius={"10px"} boxShadow={"1px 1px 20px gray"} p={"20px"}>
+        <Box border={"2px solid white"} cursor={"pointer"} w={{ base: "100%", md: "max-content" }}
+                                        overflowX={"auto"} 
+                                        p="4"
+                                        borderRadius="md" 
+                                        transform="translateY(-2px)" 
+                                        transition="all 0.2s ease-in-out" 
+                                        _hover={{ transform: "translateY(0) scale(1.02)",  boxShadow: "lg"  }} boxShadow="0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3)">
         <form onSubmit={updateUser}>        
         <FormControl >
             <FormLabel>First Name</FormLabel>

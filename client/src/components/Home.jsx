@@ -48,13 +48,19 @@ const Home = () => {
     }
 
     return (
-        <VStack p={"10px"}>
+        <VStack p={"10px"}h={"100vh"} justifyContent={"center"}>
             <Button colorScheme={"twitter"}>
                 <Link to={"/create"} >Create A User</Link>
             </Button>
             {
-                loader?<Loader/>:<Box boxShadow={"1px 1px 20px gray"} w={"max-content"}>
-                <TableContainer>
+                loader?<Loader/>:<Box cursor={"pointer"} w={{ base: "100%", md: "max-content" }}
+                                        overflowX={"auto"} 
+                                        p="4"
+                                        borderRadius="md" 
+                                        transform="translateY(-2px)" 
+                                        transition="all 0.2s ease-in-out" 
+                                        _hover={{ transform: "translateY(0) scale(1.02)",  boxShadow: "lg"  }} boxShadow="0 10px 20px rgba(0, 0, 0, 0.2), 0 6px 6px rgba(0, 0, 0, 0.3)" >
+                <TableContainer >
                     <Table variant='simple'>
                         <TableCaption>All users</TableCaption>
                         <Thead>
